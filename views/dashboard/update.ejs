@@ -1,0 +1,71 @@
+<%-include('../partials/head.ejs')%>
+<%-include('../partials/nav.ejs')%>
+<div class="container py-5">
+    <h2 class="text-center mb-5">Update Post : <%= post.title  %>  </h2>
+    
+    <form class="w-50 mx-auto" method="POST">
+        <div class="form-group my-2">
+          <label for="" class="my-2 p-1 fw-bold">Title</label>
+          <input type="text" class="form-control" name="title" id="" value="<%= post.title  %> ">
+        </div>
+        <div class="form-group my-2">
+            <label for="" class="my-2 p-1 fw-bold">Snippet</label>
+            <textarea class="form-control" id="" rows="1" name="snippet"><%= post.snippet  %> </textarea>
+        </div>
+        <div class="form-group my-2">
+          <label for="" class="my-2 p-1 fw-bold">Category</label>
+          <select class="form-control" id="" name="category">
+            <% if(post.category === 'food' ){ %>
+              <option value="food" selected>Food </option>
+              <option value="tech">Tech</option>
+            <% } else{ %>
+              <option value="food" >Food </option>
+              <option value="tech" selected>Tech</option>
+            <%}%> 
+            
+          </select>
+        </div>
+        <div class="form-group my-2">
+          <label for="" class="my-2 p-1 fw-bold">Body</label>
+          <textarea class="form-control" id="" rows="4" name="body"><%= post.body  %> </textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block w-100 mt-2">Add Post</button>
+      </form>
+</div>
+
+<script>
+  const form = document.querySelector('form');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const id = window.location.pathname.split('/').pop()
+
+    const title = form.title.value;
+    const snippet = form.snippet.value;
+    const category = form.category.value;
+    const body = form.body.value;
+
+    console.log({id, title, snippet, category, body})
+    try {
+      const request = await fetch('/blogs/update', {
+        method: "PUT",
+        body: JSON.stringify({id, title, snippet, body, category}),
+        headers: {'Content-Type': 'application/json'}
+      })
+      console.log("Request: ", request.status)
+      if(request.status === 200){
+        alert("Post Updated");
+        location.assign(`/blogs/${id}`)
+      } else{
+        alert("Post Update Failed")
+      }
+
+      
+    } catch (error) {
+      console.log(error)
+    }
+  })
+</script>
+
+<%-include('../partials/footer.ejs')%>

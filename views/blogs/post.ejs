@@ -1,0 +1,17 @@
+<%-include('../partials/head.ejs')%>
+<%-include('../partials/nav.ejs')%>
+<div class="container py-5">
+          <h2 class="d-flex justify-content-between"><%= post.title  %>
+            <% if(user){%>
+                <a href="/dashboard/update/<%= post.id %> ">
+                    <i class="fas fa-edit text-primary edit  "></i>
+                </a>
+            <%} %> 
+
+    </h2>
+          <hr />
+          <p><%= post.body  %> </p>
+</div>
+
+  
+<%- include('../partials/footer.ejs')%>

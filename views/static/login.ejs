@@ -1,0 +1,65 @@
+<%-include('../partials/head.ejs')%>
+<%-include('../partials/nav.ejs')%>
+
+<div class="container py-5">
+<form>
+    <h2>Login</h2>
+    <label for="email">Email</label>
+    <input type="email" name="email" required />
+    <div class="email error"></div>
+    <label for="password">Password</label>
+    <input type="password" name="password" required />
+    <div class="password error"></div>
+    <button>Log In</button>
+    <p class="ref">Don't have an account? <a href="/signup">Sign Up</a></p>
+</form>
+
+</div>
+
+<script>
+    const form = document.querySelector('form');
+    const emailErr = document.querySelector('.email.error')
+    const passwordErr = document.querySelector('.password.error')
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        emailErr.textContent=''
+        passwordErr.textContent=''
+
+
+        const email = form.email.value;
+        const password = form.password.value;
+
+
+        try {
+            const request = await fetch('/login', {
+                method: 'POST',
+                body: JSON.stringify({ email, password}),
+                headers: {'Content-Type': 'application/json'}
+            })
+
+            const data = await request.json();
+            console.log(data)
+
+            if(data.user){
+                location.assign('/dashboard')
+            }
+
+            if(data.errors){
+                emailErr.textContent = data.errors.email
+                passwordErr.textContent = data.errors.password
+            }
+
+
+        } catch (error) {
+            console.log(error)
+        }
+    })
+
+
+</script>
+
+
+
+<%-include('../partials/footer.ejs')%>

@@ -1,0 +1,54 @@
+<%-include('../partials/head.ejs')%>
+<%-include('../partials/nav.ejs')%>
+<div class="container py-5">
+    <h2 class="text-center mb-5">Your Dashboard</h2>
+
+    <ul class="list-group list-group-flush w-50 mx-auto">
+        <%if(lists.length){
+            lists.forEach(list => { %>
+                <li class="list-group-item d-flex justify-content-between" data-id="<%=list.id%>">
+                    <a href="/blogs/<%=list.id%>"><%=list.title%></a> 
+                    <div>
+                        <a href="/dashboard/update/<%= list.id %> ">
+                            <i class="fas fa-edit text-primary edit  "></i>
+                        </a>
+                    <i class="fa fa-trash delete shadow-sm text-danger" style="border-radius: 50%; padding: 10px" aria-hidden="true"></i>
+                    </div>
+                </li>
+                   
+
+            <% })
+        }else{ %>
+            <div class="container text-center">
+                <h2 class="display-4 text-center fw-bold">No Post to Display...</h2>
+                <p><a href="/dashboard/add" class="btn btn-primary mt-3">Add Some Here</a></p>
+            </div>
+        <%}%>
+      </ul>
+</div>
+
+
+<script>
+    const trashCans = document.querySelectorAll('i.delete');
+
+    trashCans.forEach(trashCan => {
+        const parentId = trashCan.parentElement.dataset['id'];
+        trashCan.addEventListener('click', e =>{
+            const endpoint = `/blogs/${parentId}`
+            console.log(endpoint)
+            fetch(endpoint, {
+                method: 'DELETE'
+            })
+            .then(result=>{
+                window.location.reload()
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        })
+
+    })
+
+</script>
+
+<%-include('../partials/footer.ejs')%>

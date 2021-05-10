@@ -1,0 +1,31 @@
+<%-include('../partials/head.ejs')%>
+<%-include('../partials/nav.ejs')%>
+
+      
+      <div class="container py-5">
+            <h2 class="text-center mb-5"><%= title.toUpperCase() %> CATEGORY</h2>
+            <div class="blog-main d-flex flex-wrap">
+                  <% if(blogs.length) {
+                        blogs.forEach(blog => { %>
+                              <div class="card text-center m-3" style="width: 15rem;">
+                              <div class="card-body">
+                                <h5 class="card-title"><%= blog.title %></h5>
+                                <p class="card-text"><%= blog.snippet %></p>
+                                <a href="/blogs/<%=blog.id%>" class="btn btn-primary">Read More</a>
+                              </div>
+                              </div>
+                        <% })
+                  } else { %>
+                  <div class="container text-center">
+                        <h2 class="display-4 text-center fw-bold">No Post to Display in Category...</h2>
+                        <p><a href="/" class="btn btn-primary mt-3">Add Some Here</a></p>
+                  </div>
+                  
+                  <% } %>
+            </div>
+            
+      </div>
+
+
+    
+<%-include('../partials/footer.ejs')%>
