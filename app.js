@@ -17,7 +17,7 @@ const app = express()
 
 
 //Connect to database
-const dbURI  = "mongodb://localhost:27017/testBlog";
+const dbURI  = "mongodb+srv://admin:pass@nodetuts.xe6pc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(response => {
     console.log("Connected to db")
