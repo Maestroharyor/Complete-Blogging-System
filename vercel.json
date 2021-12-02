@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "name": "complete-bloggin-system",
   "builds": [
     { "src": "app.js", "use": "@vercel/node" }
